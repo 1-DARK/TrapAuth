@@ -2,7 +2,7 @@
   "name": "trap_auth",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "backend/index.js",
   "scripts": {
     "dev": "nodemon backend/index.js",
     "start": "node backend/index.js"
@@ -19,6 +19,7 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mailtrap": "^4.3.0",
+    "mongodb": "^7.0.0",
     "mongoose": "^8.19.3",
     "nodemon": "^3.1.11"
   }
