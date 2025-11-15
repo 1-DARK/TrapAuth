@@ -70,7 +70,9 @@ export const verifyEmail = async (req, res) => {
       success: true,
       message: "Verify email",
     });
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server Error" });
+  }
 };
 
 export const login = async (req, res) => {
@@ -78,5 +80,6 @@ export const login = async (req, res) => {
 };
 
 export const logout = async (req, res) => {
-  res.send("logout");
+  res.clearCookie("token");
+  res.status(200).json({ success: true, message: "Logged out successfully" });
 };
