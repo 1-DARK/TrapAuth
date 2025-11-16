@@ -115,15 +115,22 @@ export const logout = async (req, res) => {
 
 export const forgotPassword = async (req, res) => {
   const { email } = req.body;
-  if (!user) {
-    return res.status(400).json({
-      success: false,
-      message: "User not found",
-    });
-  }
-
-  const resetToken = crypto;
   try {
     const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    const resetToken = crypto.randomBytes(20).toString("hex");
+
+    const resetTokenExpiresAt = Date.now() + 1 * 60 * 60 * 1000;
+
+    user.resetPasswordToken = resetToken;
+    resetPasswordExpiresAt = resetTokenExpiresAt;
+
+    await user.save();
   } catch (error) {}
 };
