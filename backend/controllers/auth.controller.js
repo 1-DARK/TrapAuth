@@ -2,6 +2,7 @@ import { User } from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 import { sendVerificationEmail, sendWelcomeEmail } from "../mailtrap/emails.js";
+import crypto from "crypto";
 
 export const signup = async (req, res) => {
   const { email, password, name } = req.body;
@@ -107,9 +108,22 @@ export const login = async (req, res) => {
   }
 };
 
-export const forgotPassword = async () => {};
-
 export const logout = async (req, res) => {
   res.clearCookie("token");
   res.status(200).json({ success: true, message: "Logged out successfully" });
+};
+
+export const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  if (!user) {
+    return res.status(400).json({
+      success: false,
+      message: "User not found",
+    });
+  }
+
+  const resetToken = crypto;
+  try {
+    const user = await User.findOne({ email });
+  } catch (error) {}
 };
