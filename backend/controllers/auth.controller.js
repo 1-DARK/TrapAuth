@@ -90,8 +90,21 @@ export const login = async (req, res) => {
         .status(400)
         .json({ success: false, message: "Invalid Credentials" });
     }
-    generateTokenAndSetCookie(req, user._id);
-  } catch (error) {}
+    generateTokenAndSetCookie(res, user._id);
+
+    user.lastLogin = new Date();
+
+    await user.save();
+
+    return res
+      .status(200)
+      .json({ success: true, message: "Login successfully" });
+  } catch (error) {
+    console.log("Error in login controller");
+    return res
+      .status(400)
+      .json({ success: false, message: "Error in login controller" });
+  }
 };
 
 export const logout = async (req, res) => {
