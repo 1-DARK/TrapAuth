@@ -35,3 +35,9 @@ export const sendWelcomeEmail = async (email) => {
     throw new Error(`Error sending welcome email:${error}`);
   }
 };
+
+export const sendPasswordResetEmail = async (email, reserURL) => {
+  const recipient = [{ email }];
+  try {
+  } catch (error) {}
+};
