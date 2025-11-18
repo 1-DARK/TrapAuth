@@ -5,6 +5,7 @@ import {
   sendPasswordResetEmail,
   sendVerificationEmail,
   sendWelcomeEmail,
+  sendResetSuccessEmail,
 } from "../mailtrap/emails.js";
 import crypto from "crypto";
 
@@ -171,5 +172,13 @@ export const resetPassword = async (req, res) => {
     user.resetPasswordExpiresAt = undefined;
 
     await user.save();
-  } catch (error) {}
+    await sendResetSuccessEmail(user.email);
+
+    res
+      .status(200)
+      .json({ success: true, message: "Password reset successful" });
+  } catch (error) {
+    console.log("Error in reset controller", error);
+    res.status(400).json({ success: false, message: error.message });
+  }
 };
