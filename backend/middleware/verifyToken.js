@@ -16,5 +16,8 @@ export const verifyToken = (req, res, next) => {
     }
     req.userId = decoded.userId;
     next();
-  } catch (error) {}
+  } catch (error) {
+    console.log("Error in verify token", error);
+    return res.status(500).json({ success: false, message: "Server Error " });
+  }
 };
