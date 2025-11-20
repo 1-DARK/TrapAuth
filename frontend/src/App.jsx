@@ -7,7 +7,7 @@ function App() {
         color="bg-green-500"
         size="w-64 h-64"
         top="-5%"
-        Left="10%"
+        left="10%"
         delay={0}
       />
       <FloatingShape
