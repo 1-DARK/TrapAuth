@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/Input";
 import { Loader, Lock, Mail, User } from "lucide-react";
+
 const SignUpPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -64,6 +66,14 @@ const SignUpPage = () => {
             )}
           </motion.button>
         </form>
+      </div>
+      <div className="px-8 py-4 bg-gray-900 bg-opacity-50 flex justify-center">
+        <p className="text-sm text-gray-400">
+          Already have an account?{" "}
+          <Link to={"/login"} className="text-green-400 hover:underline">
+            Login
+          </Link>
+        </p>
       </div>
     </motion.div>
   );
