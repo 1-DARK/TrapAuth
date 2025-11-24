@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import axios from "axios";
+import axios from "../lib/axios.js";
 
 export const useAuthStore = create((set) => ({
   user: null,
@@ -11,6 +11,22 @@ export const useAuthStore = create((set) => ({
   signup: async (email, password, name) => {
     set({ isLoading: true, error: null });
     try {
-    } catch (error) {}
+      const response = await axios.post("/auth/signup", {
+        email,
+        password,
+        name,
+      });
+      set({
+        user: response.data.user,
+        isAuthenticated: true,
+        isLoading: false,
+      });
+    } catch (error) {
+      set({
+        error: error.response.data.message || "Error signing up",
+        isLoading: false,
+      });
+      throw error;
+    }
   },
 }));
