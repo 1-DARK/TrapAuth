@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import axios from "../lib/axios.js";
+import axiosInstance from "../lib/axios.js";
 
 export const useAuthStore = create((set) => ({
   user: null,
@@ -11,7 +11,7 @@ export const useAuthStore = create((set) => ({
   signup: async (email, password, name) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axios.post("/auth/signup", {
+      const response = await axiosInstance.post("/auth/signup", {
         email,
         password,
         name,
