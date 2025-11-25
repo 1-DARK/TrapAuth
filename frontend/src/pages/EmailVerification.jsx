@@ -7,7 +7,7 @@ const EmailVerification = () => {
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef([]);
   const navigate = useNavigate();
-  const { isLoading } = useAuthStore();
+  const { error, verifyEmail, isLoading } = useAuthStore();
 
   const handleChange = (index, value) => {
     const newCode = [...code];
@@ -44,8 +44,12 @@ const EmailVerification = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const verificationCode = code.join("");
-    console.log("Final OTP:", verificationCode);
-    setCode(["", "", "", "", "", ""]);
+    try {
+      await verifyEmail(verificationCode);
+      setCode(["", "", "", "", "", ""]);
+      navigate("/");
+      toast.success("Email verified successfully");
+    } catch (error) {}
   };
 
   useEffect(() => {
