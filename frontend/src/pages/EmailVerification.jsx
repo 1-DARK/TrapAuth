@@ -2,12 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuthStore } from "../store/authStore";
+import toast from "react-hot-toast";
 
-const EmailVerification = () => {
+const EmailVerificationPage = () => {
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef([]);
   const navigate = useNavigate();
-  const { error, verifyEmail, isLoading } = useAuthStore();
+
+  const { error, isLoading, verifyEmail } = useAuthStore();
 
   const handleChange = (index, value) => {
     const newCode = [...code];
@@ -46,15 +48,18 @@ const EmailVerification = () => {
     const verificationCode = code.join("");
     try {
       await verifyEmail(verificationCode);
-      setCode(["", "", "", "", "", ""]);
       navigate("/");
+      setCode(["", "", "", "", "", ""]);
       toast.success("Email verified successfully");
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
+  // Auto submit when all fields are filled
   useEffect(() => {
     if (code.every((digit) => digit !== "")) {
-      handleSubmit({ preventDefault: () => {} });
+      handleSubmit(new Event("submit"));
     }
   }, [code]);
 
@@ -72,6 +77,7 @@ const EmailVerification = () => {
         <p className="text-center text-gray-300 mb-6">
           Enter the 6-digit code sent to your email address.
         </p>
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="flex justify-between">
             {code.map((digit, index) => (
@@ -79,7 +85,7 @@ const EmailVerification = () => {
                 key={index}
                 ref={(el) => (inputRefs.current[index] = el)}
                 type="text"
-                maxLength="1"
+                maxLength="6"
                 value={digit}
                 onChange={(e) => handleChange(index, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(index, e)}
@@ -87,7 +93,7 @@ const EmailVerification = () => {
               />
             ))}
           </div>
-
+          {error && <p className="text-red-500 font-semibold mt-2">{error}</p>}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -102,5 +108,4 @@ const EmailVerification = () => {
     </div>
   );
 };
-
-export default EmailVerification;
+export default EmailVerificationPage;
