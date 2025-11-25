@@ -29,4 +29,12 @@ export const useAuthStore = create((set) => ({
       throw error;
     }
   },
+  verifyEmail: async (verificationCode) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await axiosInstance.post("/auth/verify-email", {
+        verificationCode,
+      });
+    } catch (error) {}
+  },
 }));
