@@ -7,6 +7,7 @@ import EmailVerification from "./pages/EmailVerification";
 import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/authStore.js";
 import { useEffect } from "react";
+import LoadingSpinner from "./components/LoadingSpinner.jsx";
 
 const RedirectAuthenticatedUser = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
@@ -25,7 +26,7 @@ function App() {
     checkAuth();
   }, [checkAuth]);
 
-  console.log(isAuthenticated);
+  if (isCheckingAuth) return <LoadingSpinner />;
 
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-900  via-green-900 to-emerald-900 flex items-center justify-center relative overflow-hidden">
