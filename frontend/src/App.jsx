@@ -8,6 +8,7 @@ import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/authStore.js";
 import { useEffect } from "react";
 import LoadingSpinner from "./components/LoadingSpinner.jsx";
+import DashboardPage from "./pages/DashboardPage.jsx";
 
 const RedirectAuthenticatedUser = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
@@ -70,6 +71,7 @@ function App() {
           }
         />
         <Route path="/verify-email" element={<EmailVerification />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
       </Routes>
       <Toaster />
     </div>
