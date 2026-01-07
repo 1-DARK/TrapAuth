@@ -1,6 +1,5 @@
 import FloatingShape from "./components/FloatingShape";
 import { Route, Routes } from "react-router-dom";
-import HomePage from "./pages/HomePage";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
 import EmailVerification from "./pages/EmailVerification";
@@ -53,7 +52,7 @@ function App() {
         delay={2}
       />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<DashboardPage />} />
         <Route
           path="/signup"
           element={
@@ -71,7 +70,6 @@ function App() {
           }
         />
         <Route path="/verify-email" element={<EmailVerification />} />
-        <Route path="/dashboard" element={<DashboardPage />} />
       </Routes>
       <Toaster />
     </div>
